@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">EthereumSign</string>
+    <string name="mnemonic">Mnemonic:</string>
+    <string name="address">Address:</string>
+    <string name="private_key">Private:</string>
+    <string name="re_generate">Re-Generate</string>
+    <string name="sign_a_message">Sign a message</string>
+    <string name="message">Message:</string>
+    <string name="nonce">Nonce:</string>
+    <string name="sign">Sign:</string>
+    <string name="signMessage">Sign</string>
+</resources>
