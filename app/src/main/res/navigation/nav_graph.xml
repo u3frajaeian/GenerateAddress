@@ -10,18 +10,24 @@
         android:id="@+id/generateWalletFragment"
         android:name="com.u3f.ethereumsign.ui.generate.GenerateWalletFragment"
         android:label="fragment_generate_wallet"
-        tools:layout="@layout/fragment_generate_wallet" >
+        tools:layout="@layout/fragment_generate_wallet">
         <action
             android:id="@+id/action_generateWalletFragment_to_signFragment"
-            app:destination="@id/signFragment" >
-
+            app:destination="@id/signFragment">
+            <argument
+                android:name="phrase"
+                app:argType="string" />
         </action>
     </fragment>
     <fragment
         android:id="@+id/signFragment"
         android:name="com.u3f.ethereumsign.ui.sign.SignFragment"
         android:label="fragment_sign"
-        tools:layout="@layout/fragment_sign" >
+        tools:layout="@layout/fragment_sign">
+        <argument
+            android:name="phrase"
+            app:argType="string" />
+
 
     </fragment>
 </navigation>

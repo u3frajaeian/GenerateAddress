@@ -11,7 +11,7 @@ class GenerateAddressUseCase @Inject constructor(private val generateRepository:
         return flow {
             val nemonicModel = NemonicModel(null, null, null)
             val phrase = generateRepository.generateNemonic()
-            nemonicModel.keys = phrase.split(" ")
+            nemonicModel.keys = phrase
             nemonicModel.privateKey = generateRepository.generatePrivateKey(phrase)
             nemonicModel.address = generateRepository.generateAddress(phrase)
             emit(nemonicModel)

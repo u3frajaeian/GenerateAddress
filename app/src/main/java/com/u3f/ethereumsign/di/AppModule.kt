@@ -1,9 +1,8 @@
 package com.u3f.ethereumsign.di
 
 import com.u3f.ethereumsign.data.repository.generate.GenerateRepositoryImpl
-import com.u3f.ethereumsign.data.repository.sign.SignRepositoryImpl
 import com.u3f.ethereumsign.domain.repository.generate.GenerateRepository
-import com.u3f.ethereumsign.domain.repository.sign.SignRepository
+
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,9 +21,6 @@ object AppModule {
     fun providerGenerateAddressRepository(): GenerateRepository {
         return GenerateRepositoryImpl()
     }
-    @Provides
-    fun providerSignRepository(): SignRepository {
-        return SignRepositoryImpl()
-    }
+
 
 }

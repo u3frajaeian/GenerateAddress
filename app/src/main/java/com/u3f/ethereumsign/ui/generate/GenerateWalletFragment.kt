@@ -17,10 +17,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.u3f.ethereumsign.R
 import com.u3f.ethereumsign.base.UiState
 import com.u3f.ethereumsign.base.delegate.viewBinding
+import com.u3f.ethereumsign.base.extension.toast
 import com.u3f.ethereumsign.databinding.FragmentGenerateWalletBinding
 import com.u3f.ethereumsign.domain.model.sign.SignMessageModel
+import com.u3f.ethereumsign.ui.generate.GenerateWalletFragmentDirections.ActionGenerateWalletFragmentToSignFragment
 import com.u3f.ethereumsign.ui.generate.GenerateWalletFragmentDirections.actionGenerateWalletFragmentToSignFragment
 import com.u3f.ethereumsign.ui.generate.list.MnemonicAdapter
+import com.u3f.ethereumsign.ui.sign.SignFragmentArgs
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -38,8 +41,7 @@ class GenerateWalletFragment : Fragment(R.layout.fragment_generate_wallet) {
     private val binding: FragmentGenerateWalletBinding by viewBinding()
     private val nemonicAdapter: MnemonicAdapter by lazy { MnemonicAdapter() }
 
-    private lateinit var privateKey: PrivateKey
-
+    private  var phrase=""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,10 +60,10 @@ class GenerateWalletFragment : Fragment(R.layout.fragment_generate_wallet) {
                             it.data.privateKey!!.data()
                                 .joinToString(separator = "") { eachByte -> "%02x".format(eachByte) }
                         }"
-                        privateKey = it.data.privateKey!!
+                        phrase = it.data.keys!!
                         Timber.i("private ${private}")
                         Timber.i("address ${it.data.address}")
-                        nemonicAdapter.mnemonic = it.data.keys!!
+                        nemonicAdapter.mnemonic = it.data.keys!!.split(" ")
                         nemonicAdapter.notifyDataSetChanged()
                         binding.addressValue.setText(it.data.address)
                         binding.privateValue.setText(private)
@@ -80,8 +82,14 @@ class GenerateWalletFragment : Fragment(R.layout.fragment_generate_wallet) {
         }
         binding.generate.setOnClickListener { viewModel.generateMnemonic() }
         binding.sign.setOnClickListener {
-
-            findNavController().navigate(R.id.action_generateWalletFragment_to_signFragment)
+            if(phrase.isNotEmpty()) {
+                val action = actionGenerateWalletFragmentToSignFragment(phrase)
+                findNavController().navigate(
+                    action
+                )
+            }else{
+                requireContext().toast("Please generate a address at first!")
+            }
 
         }
     }
